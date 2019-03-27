@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>From currency:</strong>
+  <%= @rate.from_currency %>
+</p>
+
+<p>
+  <strong>To currency:</strong>
+  <%= @rate.to_currency %>
+</p>
+
+<p>
+  <strong>Buy:</strong>
+  <%= @rate.buy %>
+</p>
+
+<p>
+  <strong>Sell:</strong>
+  <%= @rate.sell %>
+</p>
+
+<p>
+  <strong>Receive date:</strong>
+  <%= @rate.receive_date %>
+</p>
+
+<%= link_to 'Edit', edit_rate_path(@rate) %> |
+<%= link_to 'Back', rates_path %>
