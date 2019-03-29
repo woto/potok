@@ -1,5 +1,6 @@
 ```
 bundle install
+yarn install
 rake db:setup
 rails s
 ```
