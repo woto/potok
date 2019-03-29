@@ -1,52 +1,82 @@
 <template>
-  <div class="small">
-    <rate-chart :chart-data="datacollection"></rate-chart>
-    <button @click="fillData()">Randomize</button>
+  <div>
+    <rate-chart
+      :v-if="isRatesLoaded"
+      :style="chartStyles"
+      :chart-data="chartData"
+      :options='{responsive: true, maintainAspectRatio: false, elements: { line: { tension: 0 } }}'>
+    </rate-chart>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <rate-calendar
+            mode='range'
+            v-model='dateRange'>
+            <input
+              slot-scope='props'
+              :value='props.inputValue'
+              type='text'
+              class="form-control">
+            </input>
+          </rate-calendar>
+        </div>
+        <div class="col-sm">
+          <button class="btn btn-success" @click="fillData()">Обновить</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
-  import RateChart from './RateChart'
+
+  import Vue from 'vue';
+  import Axios from 'axios'
 
   export default {
     components: {
-      RateChart
+      'rate-chart': () => import(/* webpackChunkName: "rate-chart" */ './RateChart'),
+      'rate-calendar':  () => import(/* webpackChunkName: "rate-calendar" */ './RateCalendar')
     },
     data () {
       return {
-        datacollection: null
+        chartData: {},
+        isRatesLoaded: false,
+        dateRange: {
+          // oh oh oh
+          start: new Date(new Date().setDate(new Date().getDate()-15)),
+          end: new Date()
+        },
       }
     },
-    created() {
-      this.fillData()
+    computed: {
+      chartStyles () {
+        return {
+          height: '400px',
+          position: 'relative'
+        }
+      }
     },
     methods: {
-      fillData () {
-        this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt()],
-          datasets: [
-            {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }, {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
+      async fillData () {
+        try {
+          const json = await Axios.get('/ajax/rates.json', {
+            params: {
+              from: this.dateRange.start,
+              to: this.dateRange.end
             }
-          ]
+          })
+          this.chartData = json.data
+          this.isRatesLoaded = true
+        } catch (e) {
+          alert(JSON.stringify(e.response.data));
         }
-      },
-      getRandomInt () {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
       }
-    }
+    },
+    async created() {
+      await this.fillData()
+    },
   }
 </script>
-
-<style>
-  .small {
-    max-width: 600px;
-    margin:  150px auto;
-  }
-</style>

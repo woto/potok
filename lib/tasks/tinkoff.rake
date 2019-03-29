@@ -1,8 +1,8 @@
 namespace :tinkoff do
 
-  desc "Скачивает и сохраняет курсы валют в Rate."
-  task process_rates: :environment do
-    Tinkoff::RatesService.call
+  desc "Скачивает и сохраняет курсы валют в Rate"
+  task sync_rates: :environment do
+    Tinkoff::SyncService.call
   end
 
 end

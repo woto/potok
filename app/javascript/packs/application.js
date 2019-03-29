@@ -16,4 +16,18 @@
 // const imagePath = (name) => images(name, true)
 
 console.log('Hello World from Webpacker')
-import './rate';
+
+import 'bootstrap';
+import 'jquery'
+import 'bootstrap/scss/bootstrap.scss';
+import '../rate';
+
+// v-calendar global settings
+import { setupCalendar } from 'v-calendar'
+setupCalendar({
+  firstDayOfWeek: 2,  // Monday,
+  locale: 'russian',
+  popoverVisibility: 'focus',
+  popoverDirection: 'top',
+  datePickerShowDayPopover: false
+});

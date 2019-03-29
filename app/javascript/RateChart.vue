@@ -8,7 +8,6 @@
     // https://github.com/apertureless/vue-chartjs/issues/497
     props: [ 'options'],
     mounted () {
-      console.log('mounted RateChart');
       this.renderChart(this.chartData, this.options)
     }
   }
