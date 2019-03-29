@@ -12,3 +12,5 @@ Downloads currencies rates from tinkoff to rates table
 
 
 ![Screen](/docs/screen.png)
+
+*Тесты предусмотрительно не написаны :)*
