@@ -4,6 +4,8 @@ rake db:setup
 rails s
 ```
 
+visit http://localhost:3000
+
 
 ```
 rake tinkoff:sync_rates
